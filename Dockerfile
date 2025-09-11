@@ -16,7 +16,7 @@ RUN python3 -m pip install vllm==0.10.0 && \
     python3 -m pip install flashinfer -i https://flashinfer.ai/whl/cu121/torch2.3
 
 # Setup for Option 2: Building the Image with the Model included
-ARG MODEL_NAME="nvidia/Llama-3.1-Nemotron-Nano-8B-v1"
+ARG MODEL_NAME="Qwen/Qwen3-8B"
 ARG TOKENIZER_NAME=""
 ARG BASE_PATH="/runpod-volume"
 ARG QUANTIZATION=""
@@ -33,7 +33,7 @@ ENV MODEL_NAME=$MODEL_NAME \
     HUGGINGFACE_HUB_CACHE="${BASE_PATH}/huggingface-cache/hub" \
     HF_HOME="${BASE_PATH}/huggingface-cache/hub" \
     HF_HUB_ENABLE_HF_TRANSFER=0 \
-    MAX_MODEL_LEN=16384
+    MAX_MODEL_LEN=65536
 
 ENV PYTHONPATH="/:/vllm-workspace"
 
