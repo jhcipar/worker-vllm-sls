@@ -1,6 +1,6 @@
 # Build argument for base image selection
 ARG BASE_IMAGE=nvidia/cuda:12.6.3-cudnn-runtime-ubuntu24.04
-
+ENV TEST=1
 # Stage 1: Base image with common dependencies
 FROM ${BASE_IMAGE} AS base
 
