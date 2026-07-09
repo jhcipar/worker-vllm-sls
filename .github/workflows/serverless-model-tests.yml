@@ -49,21 +49,21 @@ jobs:
         id: e2e_test
         run: python scripts/serverless_e2e_test.py --config configs/qwen/qwen3_8b.yaml --build
         env:
-          RUNPOD_API_KEY: ${{ secrets.RUNPOD_API_KEY }}
+          RUNPOD_API_KEY: ${{ secrets.RUNPOD_API_KEY_2 }}
           DOCKERHUB_REPO: ${{ vars.DOCKERHUB_REPO || 'runpod' }}
           DOCKERHUB_IMG: ${{ vars.DOCKERHUB_IMG || 'worker-v1-vllm' }}
-          HUGGINGFACE_ACCESS_TOKEN: ${{ secrets.HUGGINGFACE_ACCESS_TOKEN }}
+          HUGGINGFACE_ACCESS_TOKEN: ${{ secrets.HUGGINGFACE_ACCESS_TOKEN_2 }}
 
       - name: Cleanup safety net
         if: always()
         run: |
           if [ -n "${{ steps.e2e_test.outputs.endpoint_id }}" ]; then
             curl -sf -X DELETE "https://rest.runpod.io/v1/endpoints/${{ steps.e2e_test.outputs.endpoint_id }}" \
-              -H "Authorization: Bearer ${{ secrets.RUNPOD_API_KEY }}" || true
+              -H "Authorization: Bearer ${{ secrets.RUNPOD_API_KEY_2 }}" || true
           fi
           if [ -n "${{ steps.e2e_test.outputs.template_id }}" ]; then
             curl -sf -X DELETE "https://rest.runpod.io/v1/templates/${{ steps.e2e_test.outputs.template_id }}" \
-              -H "Authorization: Bearer ${{ secrets.RUNPOD_API_KEY }}" || true
+              -H "Authorization: Bearer ${{ secrets.RUNPOD_API_KEY_2 }}" || true
           fi
 
   # On push to main we test every tuned model config in parallel.
@@ -141,16 +141,17 @@ jobs:
         id: e2e_test
         run: python scripts/serverless_e2e_test.py --config "${{ matrix.config }}" --image "${{ needs.build.outputs.image }}"
         env:
-          RUNPOD_API_KEY: ${{ secrets.RUNPOD_API_KEY }}
+          RUNPOD_API_KEY: ${{ secrets.RUNPOD_API_KEY_2 }}
+          HUGGINGFACE_ACCESS_TOKEN: ${{ secrets.HUGGINGFACE_ACCESS_TOKEN_2 }}
 
       - name: Cleanup safety net
         if: always()
         run: |
           if [ -n "${{ steps.e2e_test.outputs.endpoint_id }}" ]; then
             curl -sf -X DELETE "https://rest.runpod.io/v1/endpoints/${{ steps.e2e_test.outputs.endpoint_id }}" \
-              -H "Authorization: Bearer ${{ secrets.RUNPOD_API_KEY }}" || true
+              -H "Authorization: Bearer ${{ secrets.RUNPOD_API_KEY_2 }}" || true
           fi
           if [ -n "${{ steps.e2e_test.outputs.template_id }}" ]; then
             curl -sf -X DELETE "https://rest.runpod.io/v1/templates/${{ steps.e2e_test.outputs.template_id }}" \
-              -H "Authorization: Bearer ${{ secrets.RUNPOD_API_KEY }}" || true
+              -H "Authorization: Bearer ${{ secrets.RUNPOD_API_KEY_2 }}" || true
           fi

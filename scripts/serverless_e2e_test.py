@@ -278,6 +278,9 @@ def main() -> int:
     hub_defaults = load_hub_defaults(args.hub_json)
     model_env = load_model_env(args.config)
     env = {**hub_defaults["env"], **model_env}
+    hf_token = os.environ.get("HF_TOKEN") or os.environ.get("HUGGINGFACE_ACCESS_TOKEN")
+    if hf_token:
+        env["HF_TOKEN"] = hf_token
     tests_data = json.loads(args.tests_file.read_text())
     gpu_type_ids = [g.strip() for g in args.gpu_type_ids.split(",") if g.strip()]
 
