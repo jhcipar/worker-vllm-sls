@@ -21,6 +21,7 @@ jobs:
   test-pr:
     if: github.event_name == 'pull_request'
     runs-on: [blacksmith-8vcpu-ubuntu-2204, linux]
+    timeout-minutes: 60
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -121,6 +122,7 @@ jobs:
     needs: [discover, build]
     if: github.event_name == 'push'
     runs-on: [blacksmith-8vcpu-ubuntu-2204, linux]
+    timeout-minutes: 60
     strategy:
       fail-fast: false
       matrix:
