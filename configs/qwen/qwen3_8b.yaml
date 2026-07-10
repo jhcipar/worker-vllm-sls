@@ -7,4 +7,6 @@ quantization: fp8
 kv-cache-dtype: fp8
 enforce-eager: false
 enable-prefix-caching: true
+vllm-release: v2.22.5 
+compilation-config: '{"cudagraph_mode": "PIECEWISE"}'
 speculative-config: '{"model":"RedHatAI/Qwen3-8B-speculator.eagle3","method":"eagle3","num_speculative_tokens":3}'
